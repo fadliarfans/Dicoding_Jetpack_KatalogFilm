@@ -18,4 +18,8 @@ class DetailMovieActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
+    companion object{
+        const val EXTRA_COURSE = "extra_course"
+    }
 }
