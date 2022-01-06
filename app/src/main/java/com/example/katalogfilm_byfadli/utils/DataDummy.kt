@@ -228,7 +228,7 @@ object DataDummy {
                 ),
                 originalLanguage = "en",
                 originalName = "The Simpsons",
-                overview = "Set in Springfield, the average American town, the show focuses on the antics and everyday adventures of the Simpson family; Homer, Marge, Bart, Lisa and Maggie, as well as a virtual cast of thousands.",
+                overview = "Set in Springfield, the average American town, the show focuses on the antics and everyday adventures of the Simpson family.",
                 popularity = 634.48,
                 posterPath = "/tubgEpjTUA7t0kejVMBsNBZDarZ.jpg",
                 voteAverage = 7.9,

@@ -136,6 +136,24 @@ class HomeActivityTest {
         onView(withId(R.id.tv_vote_average_value)).check(matches(withText(dummyTvShows[0].voteAverage.toString())))
         onView(withId(R.id.tv_vote_total_value)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_vote_total_value)).check(matches(withText(dummyTvShows[0].voteCount.toString())))
+        onView(withId(R.id.tv_popularity_value)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_popularity_value)).check(
+            matches(
+                withText(
+                    dummyTvShows[0].popularity?.toInt().toString()
+                )
+            )
+        )
+        onView(withId(R.id.tv_origin_country_value)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_origin_country_value)).check(
+            matches(
+                withText(
+                    dummyTvShows[0].originCountry.toString()
+                        .subSequence(1, dummyTvShows[0].originCountry.toString().length - 1)
+                        .toString()
+                )
+            )
+        )
     }
 
     private fun selectTabAtPosition(tabIndex: Int): ViewAction {
