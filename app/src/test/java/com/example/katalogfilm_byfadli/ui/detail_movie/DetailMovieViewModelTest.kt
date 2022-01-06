@@ -24,6 +24,5 @@ class DetailMovieViewModelTest {
     fun detailMovieFailedToGet() {
         val movie = viewModel.getDetailMovie(123456)
         println(movie!!.title)
-
     }
 }

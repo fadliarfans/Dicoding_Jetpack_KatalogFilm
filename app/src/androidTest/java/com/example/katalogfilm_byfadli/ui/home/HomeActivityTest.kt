@@ -19,7 +19,6 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
 
-
 class HomeActivityTest {
     private val dummyMovies = DataDummy.loadMoviesData()
     private val dummyTvShows = DataDummy.loadTvShowsData()

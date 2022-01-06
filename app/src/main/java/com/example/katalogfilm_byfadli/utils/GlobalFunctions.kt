@@ -62,7 +62,6 @@ object GlobalFunctions {
             "11" -> monthS = "November"
             "12" -> monthS = "Desember"
         }
-        val formatedDate = "$day $monthS $year"
-        return formatedDate
+        return "$day $monthS $year"
     }
 }

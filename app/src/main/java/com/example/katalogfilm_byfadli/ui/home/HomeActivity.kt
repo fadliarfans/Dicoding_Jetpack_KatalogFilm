@@ -42,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initAppbar() {
         supportActionBar?.elevation = 0f
-        title = "Katalog Film"
+        title = "Katalog Movie Dan TvShow"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

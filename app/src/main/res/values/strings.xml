@@ -27,6 +27,7 @@
 
     <!-- Strings used for search View-->
     <string name="search">Search</string>
+    <string name="search_hint">Masukan Judul</string>
 
     <!-- Strings used for Detail Activity -->
     <string name="overview">Overview</string>
@@ -44,5 +45,5 @@
     <string name="first_air_date">First Air Date :</string>
     <string name="origin_country">Origin Country :</string>
     <string name="country">Country</string>
-    <string name="search_hint">Masukan Judul</string>
+    
 </resources>

@@ -43,7 +43,5 @@ class TvShowViewModelTest {
         val tvShowData: List<TvShowEntity>? = null
         val firstTvShow = tvShowData!![0]
         println(firstTvShow.name)
-
     }
-
 }
