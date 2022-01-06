@@ -21,6 +21,28 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="dateline">Dateline</string>
-    <string name="description_course">Deskripsi Kelas</string>
+    <string name="genre">genre</string>
+    <string name="score_value">8.6</string>
     <string name="example">Example</string>
+
+    <!-- Strings used for search View-->
+    <string name="search">Search</string>
+
+    <!-- Strings used for Detail Activity -->
+    <string name="overview">Overview</string>
+    <string name="overview_example">A decorated Marine goes on a rescue mission to save his two young sons from an unhuman threat. As their journey takes them in increasingly dangerous directions, the boys will need to leave their childhoods behind.</string>
+    <string name="vote_average">Vote Average :</string>
+    <string name="vote_average_value">5.6</string>
+    <string name="vote_total">Vote Count   :</string>
+    <string name="vote_total_value">100</string>
+    <string name="popularity">Popularity   :</string>
+    <string name="popularity_value">1000</string>
+    <string name="year">2021</string>
+    <string name="backdrop_image">backdrop image</string>
+    <string name="poster_image">poster image</string>
+    <string name="for_dark_image">untuk menggelapkan gambar</string>
+    <string name="first_air_date">First Air Date :</string>
+    <string name="origin_country">Origin Country :</string>
+    <string name="country">Country</string>
+    <string name="search_hint">Masukan Judul</string>
 </resources>

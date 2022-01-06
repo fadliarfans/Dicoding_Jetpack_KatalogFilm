@@ -11,9 +11,12 @@
     <color name="green_300">#FF32E875</color>
     <color name="green_500">#FF18dc60</color>
     <color name="green_700">#FF14B850</color>
+    <color name="blue_100">#FFAADDFF</color>
     <color name="blue_300">#FF4388ef</color>
     <color name="blue_500">#FF1466e1</color>
     <color name="blue_700">#FF1055bc</color>
-    <color name="blue_900">#FF031126</color>
+    <color name="blue_900">#FF032299</color>
     <color name="placeholder">#6FB6B6B6</color>
+
+    <color name="black_transparent">#9A000000</color>
 </resources>

@@ -1,9 +1,9 @@
 package com.example.katalogfilm_byfadli.utils
 
 object GlobalFunctions {
-    fun generateGenre(listOfIdGenres: List<Int>): List<String> {
+    fun generateGenre(listOfIdGenres: List<Int?>?): String {
         val listOfGenres = mutableListOf<String>()
-        listOfIdGenres.forEach {
+        listOfIdGenres?.forEach {
             var genre = ""
             when (it) {
                 28 -> genre = "Action"
@@ -36,6 +36,33 @@ object GlobalFunctions {
             }
             listOfGenres.add(genre)
         }
-        return listOfGenres
+        var stringListOfGenres = listOfGenres.toString()
+        stringListOfGenres =
+            stringListOfGenres.subSequence(1, stringListOfGenres.length - 1).toString()
+        return stringListOfGenres
+    }
+
+    fun changeDateFormat(date: String): String {
+        val year = date.subSequence(0, 4)
+        val month = date.subSequence(5, 7)
+        val day = date.subSequence(8, 10)
+        var monthS = "default"
+
+        when (month) {
+            "01" -> monthS = "January"
+            "02" -> monthS = "February"
+            "03" -> monthS = "March"
+            "04" -> monthS = "April"
+            "05" -> monthS = "Mei"
+            "06" -> monthS = "June"
+            "07" -> monthS = "July"
+            "08" -> monthS = "August"
+            "09" -> monthS = "September"
+            "10" -> monthS = "October"
+            "11" -> monthS = "November"
+            "12" -> monthS = "Desember"
+        }
+        val formatedDate = "$day $monthS $year"
+        return formatedDate
     }
 }
