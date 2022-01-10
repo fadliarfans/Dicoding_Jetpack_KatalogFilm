@@ -2,17 +2,16 @@ package com.example.katalogfilm_byfadli.ui.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.katalogfilm_byfadli.data.MovieEntity
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
-
 import org.junit.Test
 import org.junit.rules.TestRule
 import java.lang.IndexOutOfBoundsException
 import java.lang.NullPointerException
+import com.google.common.truth.Truth.assertThat
+
 
 class MovieViewModelTest {
-
     private lateinit var viewModel: MovieViewModel
 
     @get:Rule
@@ -21,27 +20,30 @@ class MovieViewModelTest {
     @Before
     fun setUp() {
         viewModel = MovieViewModel()
+        viewModel.loadMoviesData()
     }
 
     @Test
-    fun getMoviesdata() {
-        viewModel.loadMoviesData()
+    fun getMoviesData() {
         val moviesData = viewModel.getMoviesData().value
-        assertNotNull(moviesData)
-        assertEquals(10, moviesData?.size)
+        assertThat(moviesData).isNotEmpty()
+        assertThat(moviesData).isNotNull()
+        assertThat(moviesData?.size).isEqualTo(10)
     }
 
     @Test(expected = IndexOutOfBoundsException::class)
     fun moviesDataEmpty() {
-        val moviesData = mutableListOf<MovieEntity>()
-        val movie = moviesData[0]
-        println(movie.title)
+        viewModel.loadSearchedMoviesData("asfjdasokflanlfi")
+        val moviesData = viewModel.getMoviesData().value
+        assertThat(moviesData).isNotNull()
+        assertThat(moviesData?.size).isEqualTo(0)
+        moviesData!![0].title
     }
 
     @Test(expected = NullPointerException::class)
-    fun moviesDataFailedToGet() {
+    fun movieDataFailedToGet() {
         val moviesData: List<MovieEntity>? = null
-        val firstMovie = moviesData!![0]
-        println(firstMovie.title)
+        assertThat(moviesData).isNull()
+        moviesData!![0].title
     }
 }

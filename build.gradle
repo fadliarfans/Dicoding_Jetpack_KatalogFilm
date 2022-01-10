@@ -21,6 +21,8 @@ buildscript {
         legacySupportVersion = '1.0.0'
         navigationVersion = '2.3.5'
         coreTestingVersion = '2.1.0'
+        mockitoVersion = '3.9.0'
+        truthVersion = '1.0.1'
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.3"

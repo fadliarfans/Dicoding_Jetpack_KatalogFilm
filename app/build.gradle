@@ -30,7 +30,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
     testOptions {
@@ -61,6 +61,9 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$androidTestVersion"
     androidTestImplementation "androidx.test:rules:$androidTestVersion"
     testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "com.google.truth:truth:$truthVersion"
 
     //core contains matches and view assertions, included by default on android project
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"

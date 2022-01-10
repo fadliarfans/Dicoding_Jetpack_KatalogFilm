@@ -2,14 +2,13 @@ package com.example.katalogfilm_byfadli.ui.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.katalogfilm_byfadli.data.TvShowEntity
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
-
 import org.junit.Test
 import org.junit.rules.TestRule
 import java.lang.IndexOutOfBoundsException
 import java.lang.NullPointerException
+import com.google.common.truth.Truth.assertThat
 
 class TvShowViewModelTest {
 
@@ -27,21 +26,24 @@ class TvShowViewModelTest {
     fun getTvShowsData() {
         viewModel.loadTvShowsData()
         val tvShowsData = viewModel.getTvShowsData().value
-        assertNotNull(tvShowsData)
-        assertEquals(10, tvShowsData?.size)
+        assertThat(tvShowsData).isNotEmpty()
+        assertThat(tvShowsData).isNotNull()
+        assertThat(tvShowsData?.size).isEqualTo(10)
     }
 
     @Test(expected = IndexOutOfBoundsException::class)
     fun tvShowsDataEmpty() {
-        val tvShowsData = mutableListOf<TvShowEntity>()
-        val tvShow = tvShowsData[0]
-        println(tvShow.name)
+        viewModel.loadSearchedTvShowsData("asfjdasokflanlfi")
+        val tvShowsData = viewModel.getTvShowsData().value
+        assertThat(tvShowsData).isNotNull()
+        assertThat(tvShowsData?.size).isEqualTo(0)
+        tvShowsData!![0].name
     }
 
     @Test(expected = NullPointerException::class)
     fun tvShowDataFailedToGet() {
-        val tvShowData: List<TvShowEntity>? = null
-        val firstTvShow = tvShowData!![0]
-        println(firstTvShow.name)
+        val tvShowsData: List<TvShowEntity>? = null
+        assertThat(tvShowsData).isNull()
+        tvShowsData!![0].name
     }
 }
