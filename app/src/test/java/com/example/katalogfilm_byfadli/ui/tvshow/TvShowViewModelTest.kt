@@ -37,13 +37,13 @@ class TvShowViewModelTest {
         val tvShowsData = viewModel.getTvShowsData().value
         assertThat(tvShowsData).isNotNull()
         assertThat(tvShowsData?.size).isEqualTo(0)
-        tvShowsData!![0].name
+        tvShowsData!![0].title
     }
 
     @Test(expected = NullPointerException::class)
     fun tvShowDataFailedToGet() {
         val tvShowsData: List<TvShowEntity>? = null
         assertThat(tvShowsData).isNull()
-        tvShowsData!![0].name
+        tvShowsData!![0].title
     }
 }

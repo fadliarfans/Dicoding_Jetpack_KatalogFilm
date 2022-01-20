@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -12,12 +15,19 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "ACCESS_TOKEN", '"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNWJlMjAyNWI2NDZhMmZiNGI3ZTUxYzdhOGNhNTEyMCIsImp0aSI6IjM4NzY5OTMiLCJzdWIiOiI2MDVlYTkzNWI4NGY5NDAwM2QxMjU2ZjkiLCJ2ZXJzaW9uIjoxLCJzY29wZXMiOlsiYXBpX3JlYWQiLCJhcGlfd3JpdGUiXSwibmJmIjoxNjQwNjU0NzgwfQ.FlbCgL45sf6sLJthyBqEuNfNoXNEYEMCETWk6j7cYgA"')
+            buildConfigField("String", "BASE_URL", '"https://api.themoviedb.org/4/"')
+            buildConfigField("String", "ACCOUNT_ID", '"605ea935b84f94003d1256f9"')
+        }
         release {
+            buildConfigField("String", "ACCESS_TOKEN", '"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNWJlMjAyNWI2NDZhMmZiNGI3ZTUxYzdhOGNhNTEyMCIsImp0aSI6IjM4NzY5OTMiLCJzdWIiOiI2MDVlYTkzNWI4NGY5NDAwM2QxMjU2ZjkiLCJ2ZXJzaW9uIjoxLCJzY29wZXMiOlsiYXBpX3JlYWQiLCJhcGlfd3JpdGUiXSwibmJmIjoxNjQwNjU0NzgwfQ.FlbCgL45sf6sLJthyBqEuNfNoXNEYEMCETWk6j7cYgA"')
+            buildConfigField("String", "BASE_URL", '"https://api.themoviedb.org/4/"')
+            buildConfigField("String", "ACCOUNT_ID", '"605ea935b84f94003d1256f9"')
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -38,6 +48,10 @@ android {
             includeAndroidResources = true
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -51,24 +65,44 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$legacySupportVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-    //implementation "com.google.android.gms:play-services-fido:18.1.0"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
-    //testing
-    testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "junit:junit:$junitVersion"
+    // unit test
     implementation "androidx.test.ext:junit-ktx:$junitExtversion"
-    androidTestImplementation "androidx.test:runner:$androidTestVersion"
-    androidTestImplementation "androidx.test:rules:$androidTestVersion"
+    implementation "androidx.test.espresso:espresso-contrib:$espressoVersion"//testing code for advanced views such as recyclerview and etc
+    testImplementation "junit:junit:$junitVersion"
     testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
     testImplementation "com.google.truth:truth:$truthVersion"
 
-    //core contains matches and view assertions, included by default on android project
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    // instumented test
+    androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test:runner:$androidTestVersion"
+    androidTestImplementation "androidx.test:rules:$androidTestVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion" //core contains matches and view assertions, included by default on android project
 
-    //testing code for advanced views such as recyclerview and etc
-    implementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    //lifecycle
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$couroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$couroutinesVersion"
+
+    //network
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVerion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVerion"
+
+    //di
+    implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$daggerHiltVersion"
+
+    //Debugging
+    debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
+}
+
+kapt {
+    correctErrorTypes true
 }

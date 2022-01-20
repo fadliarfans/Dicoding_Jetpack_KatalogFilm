@@ -8,12 +8,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.katalogfilm_byfadli.R
-import com.example.katalogfilm_byfadli.data.TvShowEntity
+import com.example.katalogfilm_byfadli.data.MovieEntity
 import com.example.katalogfilm_byfadli.databinding.ItemTvShowBinding
-import com.example.katalogfilm_byfadli.ui.detail_tvshow.DetailTvShowActivity
+import com.example.katalogfilm_byfadli.ui.detail.DetailActivity
 import com.example.katalogfilm_byfadli.utils.GlobalFunctions
 
-class TvShowAdapter(private val listOfTvShows: List<TvShowEntity>) :
+class TvShowAdapter(private val listOfTvShows: List<MovieEntity>) :
     RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
@@ -30,14 +30,14 @@ class TvShowAdapter(private val listOfTvShows: List<TvShowEntity>) :
 
     inner class TvShowViewHolder(private val binding: ItemTvShowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(TvShow: TvShowEntity) {
+        fun bind(TvShow: MovieEntity) {
             with(binding) {
-                tvItemTitle.text = TvShow.name
-                tvItemDate.text = TvShow.firstAirDate.toString().subSequence(0, 4)
+                tvItemTitle.text = TvShow.title
+                tvItemDate.text = TvShow.releaseDate.toString().subSequence(0, 4)
                 tvItemScoreValue.text = TvShow.voteAverage.toString()
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailTvShowActivity::class.java)
-                    intent.putExtra(DetailTvShowActivity.EXTRA_DATA, TvShow.id)
+                    val intent = Intent(itemView.context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_DATA, TvShow.id)
                     itemView.context.startActivity(intent)
                 }
                 tvItemGenre.text = GlobalFunctions.generateGenre(TvShow.genreIds)

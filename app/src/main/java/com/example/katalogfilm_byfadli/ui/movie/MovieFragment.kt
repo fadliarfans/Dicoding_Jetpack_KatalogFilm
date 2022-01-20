@@ -5,16 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.katalogfilm_byfadli.databinding.FragmentMovieBinding
 import com.example.katalogfilm_byfadli.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieBinding
-    private lateinit var viewModel: MovieViewModel
+    private val viewModel: MovieViewModel by viewModels()
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
@@ -27,10 +29,11 @@ class MovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (activity != null) {
-            initViewModel()
-            initRecycleView()
-        }
+        viewModel.loadMoviesData()
+//        if (activity != null) {
+//            initViewModel()
+//            initRecycleView()
+//        }
     }
 
     private fun initRecycleView() {
@@ -42,22 +45,4 @@ class MovieFragment : Fragment() {
         }
     }
 
-    private fun initViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[MovieViewModel::class.java]
-
-        viewModel.loadMoviesData()
-
-        homeViewModel = ViewModelProvider(
-            requireActivity(),
-            ViewModelProvider.NewInstanceFactory()
-        )[HomeViewModel::class.java]
-
-        homeViewModel.getSearchData().observe(viewLifecycleOwner, { query ->
-            viewModel.loadSearchedMoviesData(query ?: "")
-            binding.rvMovie.adapter = MovieAdapter(viewModel.getMoviesData().value ?: listOf())
-        })
-    }
 }

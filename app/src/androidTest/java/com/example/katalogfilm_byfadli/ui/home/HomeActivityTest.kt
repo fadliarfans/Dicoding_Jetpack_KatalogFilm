@@ -115,7 +115,7 @@ class HomeActivityTest {
         onView(withId(R.id.iv_poster)).check(matches(isDisplayed()))
         onView(withId(R.id.iv_backdrop)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_title)).check(matches(withText(dummyTvShows[0].name)))
+        onView(withId(R.id.tv_title)).check(matches(withText(dummyTvShows[0].title)))
         onView(withId(R.id.tv_genre)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_genre)).check(
             matches(

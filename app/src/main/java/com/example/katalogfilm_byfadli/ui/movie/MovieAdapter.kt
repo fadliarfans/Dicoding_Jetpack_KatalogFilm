@@ -10,7 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.katalogfilm_byfadli.R
 import com.example.katalogfilm_byfadli.data.MovieEntity
 import com.example.katalogfilm_byfadli.databinding.ItemMovieBinding
-import com.example.katalogfilm_byfadli.ui.detail_movie.DetailMovieActivity
+import com.example.katalogfilm_byfadli.ui.detail.DetailActivity
 import com.example.katalogfilm_byfadli.utils.GlobalFunctions
 
 class MovieAdapter(private val listOfMovies: List<MovieEntity>) :
@@ -36,8 +36,8 @@ class MovieAdapter(private val listOfMovies: List<MovieEntity>) :
                 tvItemDate.text = movie.releaseDate.toString().subSequence(0, 4)
                 tvItemScoreValue.text = movie.voteAverage.toString()
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailMovieActivity::class.java)
-                    intent.putExtra(DetailMovieActivity.EXTRA_DATA, movie.id)
+                    val intent = Intent(itemView.context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_DATA, movie.id)
                     itemView.context.startActivity(intent)
                 }
                 tvItemGenre.text = GlobalFunctions.generateGenre(movie.genreIds)

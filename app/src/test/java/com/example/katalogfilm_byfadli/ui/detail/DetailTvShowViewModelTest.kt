@@ -1,4 +1,4 @@
-package com.example.katalogfilm_byfadli.ui.detail_tvshow
+package com.example.katalogfilm_byfadli.ui.detail
 
 import com.example.katalogfilm_byfadli.utils.GlobalFunctions
 import org.junit.Before
@@ -7,11 +7,11 @@ import org.junit.Test
 import java.lang.NullPointerException
 
 class DetailTvShowViewModelTest {
-    private lateinit var viewModel: DetailTvShowViewModel
+    private lateinit var viewModel: DetailViewModel
 
     @Before
     fun setUp() {
-        viewModel = DetailTvShowViewModel()
+        viewModel = DetailViewModel()
     }
 
     @Test
@@ -21,7 +21,7 @@ class DetailTvShowViewModelTest {
         // id test
         assertThat(detailTvShow?.id).isEqualTo(77169)
         // name test
-        assertThat(detailTvShow?.name).isEqualTo("Cobra Kai")
+        assertThat(detailTvShow?.title).isEqualTo("Cobra Kai")
         // genre test
         assertThat(
             GlobalFunctions.generateGenre(detailTvShow?.genreIds)
@@ -75,6 +75,6 @@ class DetailTvShowViewModelTest {
     fun detailTvShowFailedToGet() {
         val tvShow = viewModel.getDetailTvShow(123456)
         assertThat(tvShow).isNull()
-        tvShow!!.name
+        tvShow!!.title
     }
 }

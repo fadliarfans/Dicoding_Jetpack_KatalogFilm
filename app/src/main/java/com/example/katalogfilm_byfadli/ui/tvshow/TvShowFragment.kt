@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.katalogfilm_byfadli.databinding.FragmentTvShowBinding
 import com.example.katalogfilm_byfadli.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class TvShowFragment : Fragment() {
     private lateinit var binding: FragmentTvShowBinding
     private lateinit var viewModel: TvShowViewModel
@@ -26,10 +27,10 @@ class TvShowFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (activity != null) {
-            initViewModel()
-            initRecycleView()
-        }
+//        if (activity != null) {
+//            initViewModel()
+//            initRecycleView()
+//        }
 
     }
 

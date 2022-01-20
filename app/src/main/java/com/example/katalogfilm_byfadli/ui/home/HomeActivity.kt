@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.katalogfilm_byfadli.R
 import com.example.katalogfilm_byfadli.databinding.ActivityHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeViewModel

@@ -1,4 +1,4 @@
-package com.example.katalogfilm_byfadli.ui.detail_movie
+package com.example.katalogfilm_byfadli.ui.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,30 +8,31 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.katalogfilm_byfadli.R
 import com.example.katalogfilm_byfadli.data.MovieEntity
-import com.example.katalogfilm_byfadli.databinding.ActivityDetailMovieBinding
+import com.example.katalogfilm_byfadli.databinding.ActivityDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class DetailMovieActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityDetailMovieBinding
-    private var movie: MovieEntity? = null
-    private lateinit var viewModel: DetailMovieViewModel
+@AndroidEntryPoint
+class DetailActivity : AppCompatActivity() {
+    private var _binding: ActivityDetailBinding? = null
+    private val binding get() = _binding!!
+    private var data: MovieEntity? = null
+    private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailMovieBinding.inflate(layoutInflater)
+        _binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initAppBar()
         initViewModel()
-        getMovie()
+        getData()
         bindDataToUi()
     }
 
     private fun bindDataToUi() {
-        if (movie != null) {
+        if (data != null) {
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w500${movie?.backdropPath}")
+                .load("https://image.tmdb.org/t/p/w500${data?.backdropPath}")
                 .apply(
                     RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error)
@@ -39,43 +40,46 @@ class DetailMovieActivity : AppCompatActivity() {
                 .into(binding.ivBackdrop)
 
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w500${movie?.posterPath}")
+                .load("https://image.tmdb.org/t/p/w500${data?.posterPath}")
                 .apply(
                     RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error)
                 ).transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.ivPoster)
             with(binding) {
-                tvTitle.text = movie?.title
-                tvOverviewValue.text = movie?.overview
-                tvVoteAverageValue.text = movie?.voteAverage.toString()
-                tvPopularityValue.text = movie?.popularity?.toInt().toString()
-                tvVoteTotalValue.text = movie?.voteCount.toString()
-                tvYear.text = movie?.releaseDate.toString().subSequence(0, 4)
-                tvGenre.text = viewModel.generateGenre(movie?.genreIds)
+                tvTitle.text = data?.title
+                tvOverviewValue.text = data?.overview
+                tvVoteAverageValue.text = data?.voteAverage.toString()
+                tvPopularityValue.text = data?.popularity?.toInt().toString()
+                tvVoteTotalValue.text = data?.voteCount.toString()
+                tvVoteTotalValue.text = data?.voteCount.toString()
+                tvGenre.text = viewModel.generateGenre(data?.genreIds)
+              tvFirstAirDateValue.text =
+                  viewModel.changeDateFormat(data?.releaseDate ?: "0000-00-00")
             }
         }
+    }
+
+    private fun getData() {
+        val extras = intent.extras
+        if (extras != null) {
+            val tvShowId = extras.getInt(EXTRA_DATA)
+            //data = viewModel.getDetailTvShow(tvShowId)
+        }
+
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
-        )[DetailMovieViewModel::class.java]
-    }
-
-    private fun getMovie() {
-        val extras = intent.extras
-        if (extras != null) {
-            val movieId = extras.getInt(EXTRA_DATA)
-            movie = viewModel.getDetailMovie(movieId)
-        }
+        )[DetailViewModel::class.java]
     }
 
     private fun initAppBar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = "Detail Movie"
+        title = "Detail Tv Show"
     }
 
     companion object {
