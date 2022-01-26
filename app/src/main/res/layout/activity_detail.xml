@@ -48,7 +48,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:contentDescription="@string/poster_image"
+                android:contentDescription="@string/backdrop_image"
                 android:scaleType="fitXY"
                 android:src="@color/black_transparent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,9 +72,10 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:contentDescription="@string/poster_image"
                     android:scaleType="fitXY"
-                    android:src="@color/teal_200"
-                    tools:ignore="ContentDescription" />
+                    android:src="@color/teal_200" />
+
             </androidx.cardview.widget.CardView>
 
 
@@ -150,7 +151,7 @@
                 android:text="@string/year"
                 android:textColor="?attr/colorPrimaryVariant"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tv_origin_country_value"
+                app:layout_constraintStart_toStartOf="@+id/tv_vote_average_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_first_air_date" />
 
             <TextView
@@ -166,10 +167,11 @@
                 android:id="@+id/tv_vote_average_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:text="@string/vote_average_value"
                 android:textColor="?attr/colorPrimaryVariant"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tv_origin_country_value"
+                app:layout_constraintStart_toEndOf="@+id/tv_vote_average"
                 app:layout_constraintTop_toTopOf="@+id/tv_vote_average" />
 
             <TextView
@@ -186,54 +188,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="40dp"
                 android:text="@string/vote_total_value"
                 android:textColor="?attr/colorPrimaryVariant"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tv_origin_country_value"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_vote_average_value"
                 app:layout_constraintTop_toBottomOf="@+id/tv_vote_average_value" />
 
-            <TextView
-                android:id="@+id/tv_popularity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/popularity"
-                app:layout_constraintStart_toStartOf="@+id/tv_vote_total"
-                app:layout_constraintTop_toBottomOf="@+id/tv_vote_total" />
 
-            <TextView
-                android:id="@+id/tv_popularity_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/popularity_value"
-                android:textColor="?attr/colorPrimaryVariant"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tv_origin_country_value"
-                app:layout_constraintTop_toBottomOf="@+id/tv_vote_total_value" />
-
-            <TextView
-                android:id="@+id/tv_origin_country"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="56dp"
-                android:text="@string/origin_country"
+            <include
+                android:id="@+id/detail_error"
+                layout="@layout/layout_error"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_popularity"
-                app:layout_constraintTop_toBottomOf="@+id/tv_popularity" />
-
-            <TextView
-                android:id="@+id/tv_origin_country_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:text="@string/country"
-                android:textColor="?attr/colorPrimaryVariant"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/tv_origin_country"
-                app:layout_constraintTop_toBottomOf="@+id/tv_popularity_value" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

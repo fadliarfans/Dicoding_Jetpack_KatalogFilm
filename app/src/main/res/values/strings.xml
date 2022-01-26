@@ -2,7 +2,6 @@
     <string name="app_name">KatalogFilm_byFadli</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_detail_movie">DetailMovieActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -11,7 +10,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_detail_tv_show">DetailTvShowActivity</string>
+    <string name="title_activity_detail">DetailActivity</string>
 
     <!-- Strings used for Home Activity for Tabs title -->
     <string name="movies">Movies</string>
@@ -45,5 +44,10 @@
     <string name="first_air_date">First Air Date :</string>
     <string name="origin_country">Origin Country :</string>
     <string name="country">Country</string>
-    
+    <string name="image_error">image error</string>
+    <string name="sorry_error_occured">Sorry Error Occurred</string>
+    <string name="movie_recommendations">Movie Recommendations</string>
+    <string name="description_error">Description Error</string>
+    <string name="data_empty">Data Empty</string>
+
 </resources>

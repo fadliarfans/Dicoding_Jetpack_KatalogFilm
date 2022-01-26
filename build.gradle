@@ -24,9 +24,11 @@ buildscript {
         mockitoVersion = '3.9.0'
         truthVersion = '1.0.1'
         lifecycleVersion = '2.4.0'
-        couroutinesVersion = '1.5.2'
+        couroutinesVersion = '1.6.0'
         retrofitVerion = '2.9.0'
         daggerHiltVersion = '2.40.5'
+        swiperefreshlayoutVersion = '1.1.0'
+        chuckerVersion = '3.4.0'
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"

@@ -5,9 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.katalogfilm_byfadli.data.Result
 import com.example.katalogfilm_byfadli.databinding.FragmentMovieBinding
 import com.example.katalogfilm_byfadli.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,33 +16,90 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MovieFragment : Fragment() {
 
-    private lateinit var binding: FragmentMovieBinding
+    private var _binding: FragmentMovieBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel: MovieViewModel by viewModels()
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by activityViewModels()
+
+    private val movieAdapter: MovieAdapter by lazy {
+        MovieAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMovieBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentMovieBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadMoviesData()
-//        if (activity != null) {
-//            initViewModel()
-//            initRecycleView()
-//        }
+        initiateObserver()
+        initiateData()
+        initiateUI()
     }
 
-    private fun initRecycleView() {
-        val movieAdapter = MovieAdapter(viewModel.getMoviesData().value ?: listOf())
+    private fun initiateData() {
+        viewModel.loadMoviesData()
+    }
+
+    private fun initiateUI() {
+        showRecycleView()
+        setListenerToSwipeRefreshLayout()
+    }
+
+    private fun setListenerToSwipeRefreshLayout() {
+        with(binding) {
+            srLayout.setOnRefreshListener {
+                initiateData()
+
+            }
+        }
+    }
+
+    private fun initiateObserver() {
+        viewModel.getMoviesData().observe(viewLifecycleOwner, {
+            when (it) {
+                is Result.Success -> {
+                    binding.rvMovie.visibility = View.VISIBLE
+                    binding.progress.visibility = View.GONE
+                    binding.error.layoutError.visibility = View.GONE
+                    binding.srLayout.isRefreshing = false
+                    if (it.data.isEmpty()) {
+                        binding.empty.layoutEmpty.visibility = View.VISIBLE
+                        movieAdapter.setList(it.data)
+                    } else {
+                        binding.empty.layoutEmpty.visibility = View.GONE
+                        movieAdapter.setList(it.data)
+                    }
+                }
+                is Result.Error -> {
+                    binding.rvMovie.visibility = View.GONE
+                    binding.error.layoutError.visibility = View.VISIBLE
+                    binding.empty.layoutEmpty.visibility = View.GONE
+                    binding.progress.visibility = View.GONE
+                    binding.error.tvErrorMessage.text = it.exception.localizedMessage
+                    binding.srLayout.isRefreshing = false
+                }
+                else -> {
+                    binding.progress.visibility = View.VISIBLE
+                    binding.empty.layoutEmpty.visibility = View.GONE
+                    binding.error.layoutError.visibility = View.GONE
+                }
+            }
+        })
+        homeViewModel.getSearchData().observe(viewLifecycleOwner, {
+            viewModel.loadSearchedMoviesData(it ?: "")
+        })
+    }
+
+    private fun showRecycleView() {
         with(binding.rvMovie) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            adapter = movieAdapter
+            this.adapter = movieAdapter
         }
     }
 

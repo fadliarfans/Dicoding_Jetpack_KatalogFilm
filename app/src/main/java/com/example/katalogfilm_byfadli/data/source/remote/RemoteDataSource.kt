@@ -1,9 +1,10 @@
 package com.example.katalogfilm_byfadli.data.source.remote
 
-import com.example.katalogfilm_byfadli.BuildConfig
-import com.example.katalogfilm_byfadli.BuildConfig.BASE_URL
 import com.example.katalogfilm_byfadli.data.source.remote.Response.MovieItem
 import com.example.katalogfilm_byfadli.data.source.remote.Response.MovieResponse
+import com.example.katalogfilm_byfadli.data.source.remote.Response.TvShowItem
+import com.example.katalogfilm_byfadli.data.source.remote.Response.TvShowResponse
+import com.example.katalogfilm_byfadli.utils.EspressoIdlingResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -14,9 +15,59 @@ import javax.inject.Singleton
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     suspend fun getRecommendationMovies(): List<MovieItem?>? {
         return withContext(Dispatchers.IO) {
-            val response: Response<MovieResponse> = apiService.getRecommendedMovie("605ea935b84f94003d1256f9")
+            EspressoIdlingResource.increment()
+            val response: Response<MovieResponse> =
+                apiService.getMovie(type = "recommendations", page = "1")
             when (response.code()) {
-                200 -> response.body()?.results
+                200 -> {
+                    EspressoIdlingResource.decrement()
+                    response.body()?.results
+                }
+                else -> null
+            }
+        }
+    }
+
+    suspend fun getRecommendationTvShows(): List<TvShowItem?>? {
+        return withContext(Dispatchers.IO) {
+            EspressoIdlingResource.increment()
+            val response: Response<TvShowResponse> =
+                apiService.getTvShow(type = "recommendations", page = "1")
+            when (response.code()) {
+                200 -> {
+                    EspressoIdlingResource.decrement()
+                    response.body()?.results
+                }
+                else -> null
+            }
+        }
+    }
+
+    suspend fun getFavoritesMovies(): List<MovieItem?>? {
+        return withContext(Dispatchers.IO) {
+            EspressoIdlingResource.increment()
+            val response: Response<MovieResponse> =
+                apiService.getMovie(type = "favorites", page = "1")
+            when (response.code()) {
+                200 ->{
+                    EspressoIdlingResource.decrement()
+                    response.body()?.results
+                }
+                else -> null
+            }
+        }
+    }
+
+    suspend fun getFavoritesTvShows(): List<TvShowItem?>? {
+        return withContext(Dispatchers.IO) {
+            EspressoIdlingResource.increment()
+            val response: Response<TvShowResponse> =
+                apiService.getTvShow(type = "favorites", page = "1")
+            when (response.code()) {
+                200 -> {
+                    EspressoIdlingResource.decrement()
+                    response.body()?.results
+                }
                 else -> null
             }
         }

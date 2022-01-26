@@ -1,14 +1,25 @@
 package com.example.katalogfilm_byfadli.data.source.remote
 
+import com.example.katalogfilm_byfadli.BuildConfig.ACCOUNT_ID
 import com.example.katalogfilm_byfadli.data.source.remote.Response.MovieResponse
-import retrofit2.Call
+import com.example.katalogfilm_byfadli.data.source.remote.Response.TvShowResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
-    @GET("account/{account_id}/movie/recommendations?page=1")
-    suspend fun getRecommendedMovie(
-        @Path("account_id") account_id: String
+    @GET("account/$ACCOUNT_ID/movie/{type}")
+    suspend fun getMovie(
+        @Path("type") type: String,
+        @Query("page") page: String
+
     ): Response<MovieResponse>
+
+    @GET("account/$ACCOUNT_ID/tv/{type}")
+    suspend fun getTvShow(
+        @Path("type") type: String,
+        @Query("page") page: String
+
+    ): Response<TvShowResponse>
 }

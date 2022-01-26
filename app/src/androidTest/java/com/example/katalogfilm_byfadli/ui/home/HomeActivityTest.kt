@@ -3,6 +3,7 @@ package com.example.katalogfilm_byfadli.ui.home
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -13,9 +14,13 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.example.katalogfilm_byfadli.R
 import com.example.katalogfilm_byfadli.utils.DataDummy
-import com.example.katalogfilm_byfadli.utils.GlobalFunctions
+import com.example.katalogfilm_byfadli.utils.EspressoIdlingResource
+import com.example.katalogfilm_byfadli.utils.changeDateFormat
+import com.example.katalogfilm_byfadli.utils.generateGenre
 import com.google.android.material.tabs.TabLayout
 import org.hamcrest.Matchers.allOf
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -25,6 +30,16 @@ class HomeActivityTest {
 
     @get:Rule
     var activityRule = ActivityScenarioRule(HomeActivity::class.java)
+
+    @Before
+    fun setUp(){
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    }
 
     @Test
     fun loadMovies() {
@@ -56,108 +71,80 @@ class HomeActivityTest {
         onView(withId(R.id.tabs)).perform(selectTabAtPosition(0))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
+                1,
                 click()
             )
         )
         onView(withId(R.id.iv_poster)).check(matches(isDisplayed()))
         onView(withId(R.id.iv_backdrop)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_title)).check(matches(withText(dummyMovies[0].title)))
+        onView(withId(R.id.tv_title)).check(matches(withText(dummyMovies[1].title)))
         onView(withId(R.id.tv_genre)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_genre)).check(
             matches(
                 withText(
-                    GlobalFunctions.generateGenre(
-                        dummyMovies[0].genreIds
-                    )
+                    dummyMovies[1].genreIds.generateGenre()
                 )
             )
         )
+
         onView(withId(R.id.tv_overview_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_overview_value)).check(matches(withText(dummyMovies[0].overview)))
-        onView(withId(R.id.tv_year)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_year)).check(
+        onView(withId(R.id.tv_overview_value)).check(matches(withText(dummyMovies[1].overview)))
+        onView(withId(R.id.tv_first_air_date_value)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_first_air_date_value)).check(
             matches(
                 withText(
-                    dummyMovies[0].releaseDate?.subSequence(
-                        0,
-                        4
-                    ).toString()
+                    dummyMovies[1].releaseDate.changeDateFormat()
                 )
             )
         )
         onView(withId(R.id.tv_vote_average_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_vote_average_value)).check(matches(withText(dummyMovies[0].voteAverage.toString())))
+        //onView(withId(R.id.tv_vote_average_value)).check(matches(withText(dummyMovies[1].voteAverage.toString())))
         onView(withId(R.id.tv_vote_total_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_vote_total_value)).check(matches(withText(dummyMovies[0].voteCount.toString())))
-        onView(withId(R.id.tv_popularity_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_popularity_value)).check(
-            matches(
-                withText(
-                    dummyMovies[0].popularity?.toInt().toString()
-                )
-            )
-        )
+        //onView(withId(R.id.tv_vote_total_value)).check(matches(withText(dummyMovies[1].voteCount.toString())))
     }
 
     @Test
     fun loadDetailTvShow() {
         onView(withId(R.id.tabs)).check(matches(isDisplayed()))
         onView(withId(R.id.tabs)).perform(selectTabAtPosition(1))
-        Thread.sleep(1000)
+        onView(withId(R.id.rv_tv_show)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                dummyTvShows.size - 2
+            )
+        )
         onView(withId(R.id.rv_tv_show)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
+                10,
                 click()
             )
         )
         onView(withId(R.id.iv_poster)).check(matches(isDisplayed()))
         onView(withId(R.id.iv_backdrop)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_title)).check(matches(withText(dummyTvShows[0].title)))
+        onView(withId(R.id.tv_title)).check(matches(withText(dummyTvShows[10].name)))
         onView(withId(R.id.tv_genre)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_genre)).check(
             matches(
                 withText(
-                    GlobalFunctions.generateGenre(
-                        dummyTvShows[0].genreIds
-                    )
+                    dummyTvShows[10].genreIds.generateGenre()
                 )
             )
         )
         onView(withId(R.id.tv_overview_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_overview_value)).check(matches(withText(dummyTvShows[0].overview)))
+        onView(withId(R.id.tv_overview_value)).check(matches(withText(dummyTvShows[10].overview)))
         onView(withId(R.id.tv_first_air_date_value)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_first_air_date_value)).check(
             matches(
                 withText(
-                    GlobalFunctions.changeDateFormat(dummyTvShows[0].firstAirDate ?: "0000:00:00")
+                    dummyTvShows[10].firstAirDate.changeDateFormat()
                 )
             )
         )
         onView(withId(R.id.tv_vote_average_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_vote_average_value)).check(matches(withText(dummyTvShows[0].voteAverage.toString())))
+        //onView(withId(R.id.tv_vote_average_value)).check(matches(withText(dummyTvShows[10].voteAverage.toString())))
         onView(withId(R.id.tv_vote_total_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_vote_total_value)).check(matches(withText(dummyTvShows[0].voteCount.toString())))
-        onView(withId(R.id.tv_popularity_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_popularity_value)).check(
-            matches(
-                withText(
-                    dummyTvShows[0].popularity?.toInt().toString()
-                )
-            )
-        )
-        onView(withId(R.id.tv_origin_country_value)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_origin_country_value)).check(
-            matches(
-                withText(
-                    dummyTvShows[0].originCountry.toString()
-                        .subSequence(1, dummyTvShows[0].originCountry.toString().length - 1)
-                        .toString()
-                )
-            )
-        )
+        //onView(withId(R.id.tv_vote_total_value)).check(matches(withText(dummyTvShows[10].voteCount.toString())))
     }
 
     private fun selectTabAtPosition(tabIndex: Int): ViewAction {

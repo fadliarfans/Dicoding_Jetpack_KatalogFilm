@@ -1,5 +1,6 @@
 package com.example.katalogfilm_byfadli.ui.tvshow
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,15 +10,22 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.katalogfilm_byfadli.R
 import com.example.katalogfilm_byfadli.data.MovieEntity
-import com.example.katalogfilm_byfadli.databinding.ItemTvShowBinding
+import com.example.katalogfilm_byfadli.databinding.ItemMovieBinding
 import com.example.katalogfilm_byfadli.ui.detail.DetailActivity
-import com.example.katalogfilm_byfadli.utils.GlobalFunctions
+import java.util.*
 
-class TvShowAdapter(private val listOfTvShows: List<MovieEntity>) :
+class TvShowAdapter :
     RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
+    private var listOfTvShows: List<MovieEntity> = Collections.emptyList()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(list: List<MovieEntity>) {
+        listOfTvShows = list
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
-        val binding = ItemTvShowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TvShowViewHolder(binding)
     }
 
@@ -28,21 +36,21 @@ class TvShowAdapter(private val listOfTvShows: List<MovieEntity>) :
 
     override fun getItemCount(): Int = listOfTvShows.size
 
-    inner class TvShowViewHolder(private val binding: ItemTvShowBinding) :
+    inner class TvShowViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(TvShow: MovieEntity) {
+        fun bind(tvShow: MovieEntity) {
             with(binding) {
-                tvItemTitle.text = TvShow.title
-                tvItemDate.text = TvShow.releaseDate.toString().subSequence(0, 4)
-                tvItemScoreValue.text = TvShow.voteAverage.toString()
+                tvItemTitle.text = tvShow.title
+                tvItemDate.text = tvShow.date
+                tvItemScoreValue.text = tvShow.voteAverage.toString()
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_DATA, TvShow.id)
+                    intent.putExtra(DetailActivity.EXTRA_DATA, tvShow)
                     itemView.context.startActivity(intent)
                 }
-                tvItemGenre.text = GlobalFunctions.generateGenre(TvShow.genreIds)
+                tvItemGenre.text = tvShow.genreIds
                 Glide.with(itemView.context)
-                    .load("https://image.tmdb.org/t/p/w500${TvShow.posterPath}")
+                    .load("https://image.tmdb.org/t/p/w500${tvShow.posterPath}")
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_loading)
                             .error(R.drawable.ic_error)

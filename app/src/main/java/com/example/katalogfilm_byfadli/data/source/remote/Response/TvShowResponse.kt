@@ -28,12 +28,6 @@ data class TvShowItem(
 	@field:SerializedName("overview")
 	val overview: String? = null,
 
-	@field:SerializedName("original_language")
-	val originalLanguage: String? = null,
-
-	@field:SerializedName("original_name")
-	val originalName: String? = null,
-
 	@field:SerializedName("vote_average")
 	val voteAverage: Double? = null,
 
@@ -51,7 +45,4 @@ data class TvShowItem(
 
 	@field:SerializedName("poster_path")
 	val posterPath: String? = null,
-
-	@field:SerializedName("origin_country")
-	val originCountry: List<String?>? = null
 )

@@ -3,28 +3,42 @@ package com.example.katalogfilm_byfadli.ui.tvshow
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.katalogfilm_byfadli.data.MovieEntity
-import com.example.katalogfilm_byfadli.utils.DataDummy
+import com.example.katalogfilm_byfadli.data.Result
+import com.example.katalogfilm_byfadli.data.source.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 
-class TvShowViewModel : ViewModel() {
-    private val tvShowsData: MutableLiveData<List<MovieEntity>> = MutableLiveData()
+@HiltViewModel
+class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepository) :
+    ViewModel() {
+    private val tvShowsData: MutableLiveData<Result<List<MovieEntity>>> = MutableLiveData()
+    private var tvShowsList: List<MovieEntity> = Collections.emptyList()
 
-    fun loadTvShowsData() {
-        tvShowsData.value = DataDummy.loadTvShowsData()
+    fun loadTvShowData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            tvShowsData.postValue(Result.Loading)
+            val result = movieRepository.getFavoritesTvShows(12)
+            tvShowsData.postValue(result)
+            tvShowsList = if (result is Result.Success) result.data else listOf()
+        }
     }
 
-    fun loadSearchedTvShowsData(query: String) {
-        val data: List<MovieEntity> = DataDummy.loadTvShowsData()
-        val resultData = mutableListOf<MovieEntity>()
-        data.forEach {
-            if (it.title?.lowercase()?.contains(query.lowercase()) == true) {
-                resultData.add(it)
+    fun loadSearchedTvShowData(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if(tvShowsData.value is Result.Success){
+                tvShowsData.postValue(Result.Loading)
+                val searchedData =
+                    tvShowsList.filter { (it.title?.lowercase()?.contains(query.lowercase()) ?: false) }
+                        .toMutableList()
+                tvShowsData.postValue(Result.Success(searchedData))
             }
         }
-        tvShowsData.value = resultData
     }
 
-    fun getTvShowsData(): LiveData<List<MovieEntity>> {
-        return tvShowsData
-    }
+    fun getTvShowsData(): LiveData<Result<List<MovieEntity>>> = tvShowsData
 }

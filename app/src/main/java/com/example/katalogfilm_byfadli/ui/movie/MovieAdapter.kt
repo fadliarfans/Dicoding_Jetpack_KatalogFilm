@@ -1,5 +1,6 @@
 package com.example.katalogfilm_byfadli.ui.movie
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,10 +12,17 @@ import com.example.katalogfilm_byfadli.R
 import com.example.katalogfilm_byfadli.data.MovieEntity
 import com.example.katalogfilm_byfadli.databinding.ItemMovieBinding
 import com.example.katalogfilm_byfadli.ui.detail.DetailActivity
-import com.example.katalogfilm_byfadli.utils.GlobalFunctions
+import java.util.*
 
-class MovieAdapter(private val listOfMovies: List<MovieEntity>) :
+class MovieAdapter :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+    private var listOfMovies: List<MovieEntity> = Collections.emptyList()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(list: List<MovieEntity>) {
+        listOfMovies = list
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,14 +41,14 @@ class MovieAdapter(private val listOfMovies: List<MovieEntity>) :
         fun bind(movie: MovieEntity) {
             with(binding) {
                 tvItemTitle.text = movie.title
-                tvItemDate.text = movie.releaseDate.toString().subSequence(0, 4)
+                tvItemDate.text = movie.date
                 tvItemScoreValue.text = movie.voteAverage.toString()
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_DATA, movie.id)
+                    intent.putExtra(DetailActivity.EXTRA_DATA, movie)
                     itemView.context.startActivity(intent)
                 }
-                tvItemGenre.text = GlobalFunctions.generateGenre(movie.genreIds)
+                tvItemGenre.text = movie.genreIds
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
                     .apply(

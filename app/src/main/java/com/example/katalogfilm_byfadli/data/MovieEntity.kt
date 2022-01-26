@@ -1,19 +1,17 @@
 package com.example.katalogfilm_byfadli.data
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MovieEntity(
-    val overview: String? = null,
-    val originalLanguage: String? = null,
-    val originalTitle: String? = null,
-    val video: Boolean? = null,
-    val title: String? = null,
-    val genreIds: List<Int?>? = null,
-    val posterPath: String? = null,
-    val backdropPath: String? = null,
-    val releaseDate: String? = null,
-    val voteAverage: Double? = null,
-    val popularity: Double? = null,
-    val id: Int? = null,
-    val adult: Boolean? = null,
-    val voteCount: Int? = null
-)
+    val overview: String?,
+    val title: String?,
+    val genreIds: String?,
+    val posterPath: String?,
+    val backdropPath: String?,
+    val date: String?,
+    val voteAverage: Double?,
+    val id: Int?,
+    val voteCount: Int?,val isTv:Boolean?):Parcelable
 

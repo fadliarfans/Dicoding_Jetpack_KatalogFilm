@@ -1,49 +1,56 @@
 package com.example.katalogfilm_byfadli.ui.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.katalogfilm_byfadli.data.TvShowEntity
+import androidx.lifecycle.Observer
+import com.example.katalogfilm_byfadli.data.MovieEntity
+import com.example.katalogfilm_byfadli.data.Result
+import com.example.katalogfilm_byfadli.data.source.MovieRepository
+import com.example.katalogfilm_byfadli.utils.DataDummy
+import com.example.katalogfilm_byfadli.utils.generateMovieEntities
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
-import java.lang.IndexOutOfBoundsException
-import java.lang.NullPointerException
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.runBlocking
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class TvShowViewModelTest {
 
     private lateinit var viewModel: TvShowViewModel
 
+    @Mock
+    private lateinit var movieRepository: MovieRepository
+
+    @Mock
+    private lateinit var observer: Observer<Result<List<MovieEntity>>>
+
+
     @get:Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setUp() {
-        viewModel = TvShowViewModel()
+        viewModel = TvShowViewModel(movieRepository)
     }
 
     @Test
-    fun getTvShowsData() {
-        viewModel.loadTvShowsData()
-        val tvShowsData = viewModel.getTvShowsData().value
-        assertThat(tvShowsData).isNotEmpty()
-        assertThat(tvShowsData).isNotNull()
-        assertThat(tvShowsData?.size).isEqualTo(10)
-    }
+    fun getTvShowsData() = runBlocking {
+        val dummyTvShows = DataDummy.loadTvShowsData().generateMovieEntities(12)
 
-    @Test(expected = IndexOutOfBoundsException::class)
-    fun tvShowsDataEmpty() {
-        viewModel.loadSearchedTvShowsData("asfjdasokflanlfi")
-        val tvShowsData = viewModel.getTvShowsData().value
-        assertThat(tvShowsData).isNotNull()
-        assertThat(tvShowsData?.size).isEqualTo(0)
-        tvShowsData!![0].title
-    }
+        `when`(movieRepository.getFavoritesTvShows(12)).thenReturn(Result.Success(dummyTvShows))
+        viewModel.loadTvShowData()
+        verify(movieRepository).getFavoritesTvShows(12)
 
-    @Test(expected = NullPointerException::class)
-    fun tvShowDataFailedToGet() {
-        val tvShowsData: List<TvShowEntity>? = null
-        assertThat(tvShowsData).isNull()
-        tvShowsData!![0].title
+        val moviesEntities = viewModel.getTvShowsData()
+        assertThat(moviesEntities).isNotNull()
+        assertThat((moviesEntities.value as Result.Success).data.size).isEqualTo(12)
+
+        viewModel.getTvShowsData().observeForever(observer)
+        verify(observer).onChanged(Result.Success(dummyTvShows))
     }
 }

@@ -4,9 +4,8 @@ import com.example.katalogfilm_byfadli.data.MovieEntity
 import com.example.katalogfilm_byfadli.data.Result
 import com.example.katalogfilm_byfadli.data.source.remote.RemoteDataSource
 import com.example.katalogfilm_byfadli.utils.generateMovieEntities
-import javax.inject.Inject
 
-class MovieRepository @Inject constructor(private val remoteDataSource: RemoteDataSource) :
+class FakeMovieRepository (private val remoteDataSource: RemoteDataSource) :
     MovieDataSource {
 
     override suspend fun getFavoritesMovies(total: Int): Result<List<MovieEntity>> {
