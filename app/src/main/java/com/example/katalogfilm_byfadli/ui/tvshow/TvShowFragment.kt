@@ -101,4 +101,9 @@ class TvShowFragment : Fragment() {
             this.adapter = tvShowAdapter
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

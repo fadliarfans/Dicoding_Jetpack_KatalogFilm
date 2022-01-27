@@ -103,6 +103,7 @@ dependencies {
     //Debugging
     debugImplementation "com.github.chuckerteam.chucker:library:$chuckerVersion"
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$chuckerVersion"
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
 }
 
 kapt {

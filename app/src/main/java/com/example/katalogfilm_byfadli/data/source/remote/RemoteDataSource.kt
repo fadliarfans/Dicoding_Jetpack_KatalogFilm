@@ -18,12 +18,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             EspressoIdlingResource.increment()
             val response: Response<MovieResponse> =
                 apiService.getMovie(type = "recommendations", page = "1")
-            when (response.code()) {
-                200 -> {
-                    EspressoIdlingResource.decrement()
-                    response.body()?.results
-                }
-                else -> null
+            if (response.code() == 200) {
+                EspressoIdlingResource.decrement()
+                response.body()?.results
+            }
+            else {
+                EspressoIdlingResource.decrement()
+                null
             }
         }
     }
@@ -33,12 +34,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             EspressoIdlingResource.increment()
             val response: Response<TvShowResponse> =
                 apiService.getTvShow(type = "recommendations", page = "1")
-            when (response.code()) {
-                200 -> {
-                    EspressoIdlingResource.decrement()
-                    response.body()?.results
-                }
-                else -> null
+            if (response.code() == 200) {
+                EspressoIdlingResource.decrement()
+                response.body()?.results
+            }
+            else{
+                EspressoIdlingResource.decrement()
+                null
             }
         }
     }
@@ -48,12 +50,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             EspressoIdlingResource.increment()
             val response: Response<MovieResponse> =
                 apiService.getMovie(type = "favorites", page = "1")
-            when (response.code()) {
-                200 ->{
-                    EspressoIdlingResource.decrement()
-                    response.body()?.results
-                }
-                else -> null
+            if (response.code() == 200) {
+                EspressoIdlingResource.decrement()
+                response.body()?.results
+            }
+            else {
+                EspressoIdlingResource.decrement()
+                null
             }
         }
     }
@@ -63,12 +66,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             EspressoIdlingResource.increment()
             val response: Response<TvShowResponse> =
                 apiService.getTvShow(type = "favorites", page = "1")
-            when (response.code()) {
-                200 -> {
-                    EspressoIdlingResource.decrement()
-                    response.body()?.results
-                }
-                else -> null
+            if (response.code() == 200) {
+                EspressoIdlingResource.decrement()
+                response.body()?.results
+            }
+            else {
+                EspressoIdlingResource.decrement()
+                null
             }
         }
     }
