@@ -49,5 +49,6 @@
     <string name="movie_recommendations">Movie Recommendations</string>
     <string name="description_error">Description Error</string>
     <string name="data_empty">Data Empty</string>
+    <string name="favorite">favorite</string>
 
 </resources>

@@ -41,25 +41,16 @@
                 android:scaleType="fitXY"
                 android:src="@color/teal_200" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_item_score_value"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@color/white"
-                app:cardCornerRadius="2dp">
-
-                <TextView
-                    android:id="@+id/tv_item_score_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="3dp"
-                    android:gravity="start"
-                    android:textColor="?attr/colorSecondaryVariant"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp"
-                    tools:text="@string/score_value" />
-
-            </LinearLayout>
+                android:gravity="center"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="10sp"
+                tools:ignore="SmallSp"
+                tools:text="@string/score_value" />
 
         </androidx.cardview.widget.CardView>
 

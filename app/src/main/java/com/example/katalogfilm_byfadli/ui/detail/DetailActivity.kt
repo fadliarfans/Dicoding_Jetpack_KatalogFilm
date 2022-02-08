@@ -1,15 +1,14 @@
 package com.example.katalogfilm_byfadli.ui.detail
 
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.katalogfilm_byfadli.R
-import com.example.katalogfilm_byfadli.data.MovieEntity
-import com.example.katalogfilm_byfadli.data.Result
+import com.example.katalogfilm_byfadli.data.source.local.entity.MovieEntity
 import com.example.katalogfilm_byfadli.databinding.ActivityDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +27,7 @@ class DetailActivity : AppCompatActivity() {
         initiateObserver()
     }
 
+
     private fun initiateData() {
         val extras = intent.extras
         if (extras != null) {
@@ -37,20 +37,23 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initiateObserver() {
-        viewModel.getDetailMovieOrTvShowData().observe(this, {
-            when (it) {
-                is Result.Success -> {
-                    binding.detailError.layoutError.visibility = View.GONE
-                    showDetail(it.data)
-                    setupAppBar(it.data)
+        viewModel.getDetailMovieOrTvShowData().observe(this) {
+            showDetail(it)
+            setupAppBar(it)
+        }
+        viewModel.getFavoriteState().observe(this){
+            if(it){
+                binding.ivFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                binding.ivFavorite.setOnClickListener {
+                    viewModel.deleteFavorite()
                 }
-                else -> {
-                    binding.detailError.layoutError.visibility = View.VISIBLE
-                    binding.detailError.tvErrorMessage.text =
-                        (it as Result.Error).exception.localizedMessage
+            }else{
+                binding.ivFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                binding.ivFavorite.setOnClickListener {
+                    viewModel.insertFavorite()
                 }
             }
-        })
+        }
     }
 
     private fun showDetail(data: MovieEntity) {

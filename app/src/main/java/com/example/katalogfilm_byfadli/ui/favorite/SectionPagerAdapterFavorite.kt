@@ -1,16 +1,17 @@
-package com.example.katalogfilm_byfadli.ui.home
+package com.example.katalogfilm_byfadli.ui.favorite
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.katalogfilm_byfadli.ui.movie.MovieFragment
+import com.example.katalogfilm_byfadli.ui.movieFavorite.MovieFavoriteFragment
 
-class SectionsPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+class SectionPagerAdapterFavorite(fa: FragmentActivity) : FragmentStateAdapter(fa) {
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment = when (position) {
-        0 -> MovieFragment(false)
-        1 -> MovieFragment(true)
+        0 -> MovieFavoriteFragment(false)
+        1 -> MovieFavoriteFragment(true)
         else -> Fragment()
     }
 }

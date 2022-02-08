@@ -1,8 +1,8 @@
 package com.example.katalogfilm_byfadli.utils
 
-import com.example.katalogfilm_byfadli.data.MovieEntity
-import com.example.katalogfilm_byfadli.data.source.remote.Response.MovieItem
-import com.example.katalogfilm_byfadli.data.source.remote.Response.TvShowItem
+import com.example.katalogfilm_byfadli.data.source.local.entity.MovieEntity
+import com.example.katalogfilm_byfadli.data.source.remote.response.MovieItem
+import com.example.katalogfilm_byfadli.data.source.remote.response.TvShowItem
 
 fun List<Int?>?.generateGenre(): String {
     val listOfGenres = mutableListOf<String>()

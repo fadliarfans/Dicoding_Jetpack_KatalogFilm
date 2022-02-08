@@ -4,8 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.katalogfilm_byfadli.BuildConfig.ACCESS_TOKEN
-import com.example.katalogfilm_byfadli.BuildConfig.BASE_URL
+import com.example.katalogfilm_byfadli.BuildConfig.*
 import com.example.katalogfilm_byfadli.data.source.remote.ApiService
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -77,14 +76,16 @@ class NetworkModule {
         okHttpClientBuilder.writeTimeout(WRITE_TIMEOUT.toLong(), TimeUnit.SECONDS)
         okHttpClientBuilder.cache(cache)
         okHttpClientBuilder.addInterceptor(headerInterceptor)
-        okHttpClientBuilder.addInterceptor(
-            ChuckerInterceptor.Builder(context)
-                .collector(ChuckerCollector(context))
-                .maxContentLength(250000L)
-                .redactHeaders(emptySet())
-                .alwaysReadResponseBody(false)
-                .build()
-        )
+        if(DEBUG){
+            okHttpClientBuilder.addInterceptor(
+                ChuckerInterceptor.Builder(context)
+                    .collector(ChuckerCollector(context))
+                    .maxContentLength(250000L)
+                    .redactHeaders(emptySet())
+                    .alwaysReadResponseBody(false)
+                    .build()
+            )
+        }
         return okHttpClientBuilder.build()
     }
 

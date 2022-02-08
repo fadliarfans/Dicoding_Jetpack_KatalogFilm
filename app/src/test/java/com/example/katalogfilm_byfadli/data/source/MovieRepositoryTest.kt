@@ -2,11 +2,9 @@ package com.example.katalogfilm_byfadli.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.example.katalogfilm_byfadli.data.Result
 import com.example.katalogfilm_byfadli.data.source.remote.RemoteDataSource
 import com.example.katalogfilm_byfadli.utils.DataDummy
 import com.example.katalogfilm_byfadli.utils.LiveDataTestUtil
-import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule

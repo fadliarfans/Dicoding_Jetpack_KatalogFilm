@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.katalogfilm_byfadli.data.Result
 import com.example.katalogfilm_byfadli.databinding.FragmentMovieBinding
 import com.example.katalogfilm_byfadli.ui.home.HomeViewModel
+import com.example.katalogfilm_byfadli.vo.Status
+import com.example.katalogfilm_byfadli.vo.Status.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieFragment : Fragment() {
+class MovieFragment(private val isTv: Boolean) : Fragment() {
 
     private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
@@ -42,7 +43,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun initiateData() {
-        viewModel.loadMoviesData()
+        viewModel.loadMovieOrTvShowDataData(isTv = isTv)
     }
 
     private fun initiateUI() {
@@ -54,33 +55,32 @@ class MovieFragment : Fragment() {
         with(binding) {
             srLayout.setOnRefreshListener {
                 initiateData()
-
             }
         }
     }
 
     private fun initiateObserver() {
-        viewModel.getMoviesData().observe(viewLifecycleOwner, {
-            when (it) {
-                is Result.Success -> {
+        viewModel.getData().observe(viewLifecycleOwner) {
+            when (it.status) {
+                SUCCESS -> {
                     binding.rvMovie.visibility = View.VISIBLE
                     binding.progress.visibility = View.GONE
                     binding.error.layoutError.visibility = View.GONE
                     binding.srLayout.isRefreshing = false
-                    if (it.data.isEmpty()) {
+                    if (it.data?.isEmpty() != false) {
                         binding.empty.layoutEmpty.visibility = View.VISIBLE
-                        movieAdapter.setList(it.data)
+                        movieAdapter.setList(mutableListOf())
                     } else {
                         binding.empty.layoutEmpty.visibility = View.GONE
                         movieAdapter.setList(it.data)
                     }
                 }
-                is Result.Error -> {
+                ERROR -> {
                     binding.rvMovie.visibility = View.GONE
                     binding.error.layoutError.visibility = View.VISIBLE
                     binding.empty.layoutEmpty.visibility = View.GONE
                     binding.progress.visibility = View.GONE
-                    binding.error.tvErrorMessage.text = it.exception.localizedMessage
+                    binding.error.tvErrorMessage.text = it.message
                     binding.srLayout.isRefreshing = false
                 }
                 else -> {
@@ -89,10 +89,10 @@ class MovieFragment : Fragment() {
                     binding.error.layoutError.visibility = View.GONE
                 }
             }
-        })
-        homeViewModel.getSearchData().observe(viewLifecycleOwner, {
-            viewModel.loadSearchedMoviesData(it ?: "")
-        })
+        }
+        homeViewModel.getSearchData().observe(viewLifecycleOwner) {
+            viewModel.loadSearchedData(it ?: "")
+        }
     }
 
     private fun showRecycleView() {
@@ -104,8 +104,8 @@ class MovieFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
 }

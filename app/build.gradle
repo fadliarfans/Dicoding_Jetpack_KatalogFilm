@@ -66,11 +66,17 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    annotationProcessor "androidx.annotation:annotation:1.3.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayoutVersion"
 
     // unit test
     implementation "androidx.test.ext:junit-ktx:$junitExtversion"
-    implementation "androidx.test.espresso:espresso-contrib:$espressoVersion"//testing code for advanced views such as recyclerview and etc
+    implementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    implementation 'androidx.paging:paging-common-ktx:3.1.0'
+
+    //testing code for advanced views such as recyclerview and etc
     testImplementation "junit:junit:$junitVersion"
     testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
@@ -104,6 +110,15 @@ dependencies {
     debugImplementation "com.github.chuckerteam.chucker:library:$chuckerVersion"
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$chuckerVersion"
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+
+    //Database
+    implementation "androidx.room:room-runtime:$roomRuntimeVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-paging:$roomVersion"
+
+    //Paging
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
+
 }
 
 kapt {

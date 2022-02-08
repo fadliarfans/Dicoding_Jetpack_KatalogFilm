@@ -2,8 +2,7 @@ package com.example.katalogfilm_byfadli.ui.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.katalogfilm_byfadli.data.MovieEntity
-import com.example.katalogfilm_byfadli.data.Result
+import com.example.katalogfilm_byfadli.data.source.local.entity.MovieEntity
 import com.example.katalogfilm_byfadli.data.source.MovieRepository
 import com.example.katalogfilm_byfadli.utils.DataDummy
 import com.example.katalogfilm_byfadli.utils.generateMovieEntities

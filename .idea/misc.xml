@@ -7,6 +7,7 @@
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14322916666666666" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/drawable-v24/ic_loading_2.xml" value="0.13541666666666666" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/drawable/ic_baseline_broken_image_24.xml" value="0.13541666666666666" />
+        <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/drawable/ic_baseline_favorite_grey_24.xml" value="0.1095" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/drawable/ic_baseline_refresh_24.xml" value="0.13333333333333333" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/drawable/ic_error.xml" value="0.26614583333333336" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14322916666666666" />
@@ -16,15 +17,18 @@
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/activity_detail.xml" value="0.2591792656587473" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/activity_detail_movie.xml" value="0.2" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/activity_detail_tv_show.xml" value="0.264" />
+        <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/activity_favorite.xml" value="0.25" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/activity_home.xml" value="0.2359375" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/content_detail_movie.xml" value="0.12708333333333333" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/fragment_error.xml" value="0.152" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/fragment_movie.xml" value="0.264" />
+        <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/fragment_movie_favorite.xml" value="0.25" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/fragment_tv_show.xml" value="0.1" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/item_movie.xml" value="0.4" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/item_tv_show.xml" value="0.4" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/layout_empty.xml" value="0.25" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/layout/layout_error.xml" value="0.264" />
+        <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/menu/option_menu_favorite.xml" value="0.1" />
         <entry key="..\:/Program/AndroidNative/KatalogFilm_byFadli/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14322916666666666" />
       </map>
     </option>

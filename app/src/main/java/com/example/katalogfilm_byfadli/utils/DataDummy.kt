@@ -1,7 +1,7 @@
 package com.example.katalogfilm_byfadli.utils
 
-import com.example.katalogfilm_byfadli.data.source.remote.Response.MovieItem
-import com.example.katalogfilm_byfadli.data.source.remote.Response.TvShowItem
+import com.example.katalogfilm_byfadli.data.source.remote.response.MovieItem
+import com.example.katalogfilm_byfadli.data.source.remote.response.TvShowItem
 
 object DataDummy {
     fun loadMoviesData(): List<MovieItem> {

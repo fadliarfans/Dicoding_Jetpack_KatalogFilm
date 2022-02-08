@@ -2,8 +2,7 @@ package com.example.katalogfilm_byfadli.ui.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.katalogfilm_byfadli.data.MovieEntity
-import com.example.katalogfilm_byfadli.data.Result
+import com.example.katalogfilm_byfadli.data.source.local.entity.MovieEntity
 import com.example.katalogfilm_byfadli.data.source.MovieRepository
 import com.example.katalogfilm_byfadli.utils.DataDummy
 import com.example.katalogfilm_byfadli.utils.generateMovieEntities
@@ -17,7 +16,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
-import java.lang.Exception
 
 @RunWith(MockitoJUnitRunner::class)
 class MovieViewModelTest {
@@ -44,14 +42,14 @@ class MovieViewModelTest {
         val dummyMovies = DataDummy.loadMoviesData().generateMovieEntities(10)
 
         `when`(movieRepository.getFavoritesMovies(10)).thenReturn(Result.Success(dummyMovies))
-        viewModel.loadMoviesData()
+        viewModel.loadMovieOrTvShowDataData()
         verify(movieRepository).getFavoritesMovies(10)
 
-        val moviesEntities = viewModel.getMoviesData()
+        val moviesEntities = viewModel.getData()
         assertThat(moviesEntities).isNotNull()
         assertThat((moviesEntities.value as Result.Success).data.size).isEqualTo(10)
 
-        viewModel.getMoviesData().observeForever(observer)
+        viewModel.getData().observeForever(observer)
         verify(observer).onChanged(Result.Success(dummyMovies))
     }
 }

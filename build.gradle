@@ -19,9 +19,9 @@ buildscript {
         kotlin_version = '1.6.10'
         androidXTestVersion = '1.2.0'
         legacySupportVersion = '1.0.0'
-        navigationVersion = '2.3.5'
+        navigationVersion = '2.4.0'
         coreTestingVersion = '2.1.0'
-        mockitoVersion = '3.9.0'
+        mockitoVersion = '4.2.0'
         truthVersion = '1.0.1'
         lifecycleVersion = '2.4.0'
         couroutinesVersion = '1.6.0'
@@ -29,6 +29,9 @@ buildscript {
         daggerHiltVersion = '2.40.5'
         swiperefreshlayoutVersion = '1.1.0'
         chuckerVersion = '3.4.0'
+        roomVersion = '2.4.1'
+        roomRuntimeVersion = '2.4.1'
+        pagingVersion = '3.1.0'
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"

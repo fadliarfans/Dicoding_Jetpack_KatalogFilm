@@ -1,9 +1,9 @@
 package com.example.katalogfilm_byfadli.data.source
 
-import com.example.katalogfilm_byfadli.data.MovieEntity
-import com.example.katalogfilm_byfadli.data.Result
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
+import com.example.katalogfilm_byfadli.data.source.local.entity.MovieEntity
 import com.example.katalogfilm_byfadli.data.source.remote.RemoteDataSource
-import com.example.katalogfilm_byfadli.utils.generateMovieEntities
 
 class FakeMovieRepository (private val remoteDataSource: RemoteDataSource) :
     MovieDataSource {
@@ -18,7 +18,7 @@ class FakeMovieRepository (private val remoteDataSource: RemoteDataSource) :
         }
     }
 
-    override suspend fun getFavoritesTvShows(total: Int): Result<List<MovieEntity>> {
+    override suspend fun getFavoritesTvShows(total: Int): LiveData<PagedList<List<MovieEntity>>> {
         return try {
             val responseList = remoteDataSource.getFavoritesTvShows()
             val moviesEntities = responseList.generateMovieEntities(12)
