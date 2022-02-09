@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Singleton // Tell Dagger-Hilt to create a singleton accessible everywhere in ApplicationCompenent (i.e. everywhere in the application)
+    @Singleton
     @Provides
     fun provideMovieDatabase(
         @ApplicationContext app: Context
@@ -22,7 +22,7 @@ object AppModule {
         app,
         MovieDatabase::class.java,
         "movies.db"
-    ).build() // The reason we can construct a database for the repo
+    ).build()
 
     @Singleton
     @Provides

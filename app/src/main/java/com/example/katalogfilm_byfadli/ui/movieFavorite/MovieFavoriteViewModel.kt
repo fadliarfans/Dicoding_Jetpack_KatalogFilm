@@ -12,10 +12,26 @@ import javax.inject.Inject
 class MovieFavoriteViewModel @Inject constructor(private val movieRepository: MovieRepository) :
     ViewModel() {
 
-    fun loadMovieOrTvShowData(isTv: Boolean):LiveData<PagingData<MovieEntity>> =
+    private val searchData = MutableLiveData<String>()
+
+    init {
+        searchData.value = ""
+    }
+
+    fun loadMovieOrTvShowData(isTv: Boolean): LiveData<PagingData<MovieEntity>> =
         if (isTv) {
-            movieRepository.getFavoritesTvShows().cachedIn(viewModelScope)
+            Transformations.switchMap(searchData) { title ->
+                movieRepository.getFavoritesTvShows(
+                    title
+                ).cachedIn(viewModelScope)
+            }
         } else {
-            movieRepository.getFavoritesMovies().cachedIn(viewModelScope)
+            Transformations.switchMap(searchData) { title ->
+                movieRepository.getFavoritesMovies(title).cachedIn(viewModelScope)
+            }
         }
+
+    fun setSearchData(value: String) {
+        searchData.value = value
+    }
 }

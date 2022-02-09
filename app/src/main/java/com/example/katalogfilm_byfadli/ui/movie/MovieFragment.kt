@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.katalogfilm_byfadli.databinding.FragmentMovieBinding
 import com.example.katalogfilm_byfadli.ui.home.HomeViewModel
-import com.example.katalogfilm_byfadli.vo.Status
 import com.example.katalogfilm_byfadli.vo.Status.*
 import dagger.hilt.android.AndroidEntryPoint
 

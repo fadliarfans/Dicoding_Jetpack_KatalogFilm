@@ -1,7 +1,7 @@
 package com.example.katalogfilm_byfadli.ui.detail
 
 import android.os.Bundle
-import android.util.Log
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -41,13 +41,13 @@ class DetailActivity : AppCompatActivity() {
             showDetail(it)
             setupAppBar(it)
         }
-        viewModel.getFavoriteState().observe(this){
-            if(it){
+        viewModel.getFavoriteState().observe(this) {
+            if (it) {
                 binding.ivFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
                 binding.ivFavorite.setOnClickListener {
                     viewModel.deleteFavorite()
                 }
-            }else{
+            } else {
                 binding.ivFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                 binding.ivFavorite.setOnClickListener {
                     viewModel.insertFavorite()
@@ -91,6 +91,18 @@ class DetailActivity : AppCompatActivity() {
             "Detail TvShow"
         } else {
             "Detail Movie"
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
 

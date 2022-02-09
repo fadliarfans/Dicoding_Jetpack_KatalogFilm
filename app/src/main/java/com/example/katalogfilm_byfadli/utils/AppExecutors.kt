@@ -3,8 +3,6 @@ package com.example.katalogfilm_byfadli.utils
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
-import dagger.Module
-import dagger.Provides
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.inject.Inject

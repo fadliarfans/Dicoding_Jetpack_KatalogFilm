@@ -5,13 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.katalogfilm_byfadli.databinding.FragmentMovieFavoriteBinding
+import com.example.katalogfilm_byfadli.ui.favorite.FavoriteViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MovieFavoriteFragment(private val isTv: Boolean) : Fragment() {
@@ -19,6 +20,7 @@ class MovieFavoriteFragment(private val isTv: Boolean) : Fragment() {
     private lateinit var binding: FragmentMovieFavoriteBinding
 
     private val viewModel: MovieFavoriteViewModel by viewModels()
+    private val favoriteViewModel: FavoriteViewModel by activityViewModels()
     private val movieFavoriteAdapter: MovieFavoriteAdapter by lazy {
         MovieFavoriteAdapter()
     }
@@ -54,8 +56,10 @@ class MovieFavoriteFragment(private val isTv: Boolean) : Fragment() {
         }
     }
 
-
     private fun initiateObserver() {
+        favoriteViewModel.getSearchData().observe(viewLifecycleOwner) {
+            viewModel.setSearchData(it ?: "")
+        }
         viewModel.loadMovieOrTvShowData(isTv).observe(viewLifecycleOwner) {
             lifecycleScope.launchWhenCreated {
                 movieFavoriteAdapter.submitData(it)

@@ -1,11 +1,8 @@
 package com.example.katalogfilm_byfadli.ui.favorite
 
 import androidx.lifecycle.*
-import com.example.katalogfilm_byfadli.data.source.MovieRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import javax.inject.Inject
 
-class FavoriteViewModel: ViewModel() {
+class FavoriteViewModel : ViewModel() {
     private val searchData: MutableLiveData<String?> by lazy {
         MutableLiveData<String?>()
     }

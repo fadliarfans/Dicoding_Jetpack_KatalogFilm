@@ -76,7 +76,7 @@ class NetworkModule {
         okHttpClientBuilder.writeTimeout(WRITE_TIMEOUT.toLong(), TimeUnit.SECONDS)
         okHttpClientBuilder.cache(cache)
         okHttpClientBuilder.addInterceptor(headerInterceptor)
-        if(DEBUG){
+        if (DEBUG) {
             okHttpClientBuilder.addInterceptor(
                 ChuckerInterceptor.Builder(context)
                     .collector(ChuckerCollector(context))

@@ -1,6 +1,5 @@
 package com.example.katalogfilm_byfadli.data.source
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.*
@@ -11,8 +10,6 @@ import com.example.katalogfilm_byfadli.data.source.remote.*
 import com.example.katalogfilm_byfadli.utils.AppExecutors
 import com.example.katalogfilm_byfadli.utils.generateMovieEntities
 import com.example.katalogfilm_byfadli.vo.Resource
-import kotlinx.coroutines.flow.map
-import java.util.concurrent.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -60,29 +57,30 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    override suspend fun insertFavorites(movieEntity: MovieEntity?) {
+    override fun insertFavorites(movieEntity: MovieEntity?) {
         appExecutors.diskIO().execute {
             if (movieEntity != null) localDataSource.insertFavorite(mutableListOf(movieEntity))
         }
 
     }
 
-    override suspend fun deleteFavorites(movieEntity: MovieEntity?) {
+    override fun deleteFavorites(movieEntity: MovieEntity?) {
         appExecutors.diskIO().execute {
             if (movieEntity != null) localDataSource.deleteFavorite(movieEntity)
         }
     }
 
-    override fun getFavoritesMovies() =
-        Pager(config = PagingConfig( pageSize = 20)) {
-            localDataSource.getFavoritesMovies()
+    override fun getFavoritesMovies(title: String) =
+        Pager(config = PagingConfig(pageSize = 20)) {
+            localDataSource.getFavoritesMovies(title)
         }.liveData
 
-    override fun getFavoritesTvShows() =
-        Pager(config = PagingConfig( pageSize = 20)) {
-            localDataSource.getFavoritesTvShow()
+    override fun getFavoritesTvShows(title: String) =
+        Pager(config = PagingConfig(pageSize = 20)) {
+            localDataSource.getFavoritesTvShow(title)
         }.liveData
 
-    override suspend fun isDataExist(id: Int): List<MovieEntity> =
-        localDataSource.isDataExist(id)
+    override fun isDataExist(id: Int): List<MovieEntity> {
+        return localDataSource.isDataExist(id)
+    }
 }
