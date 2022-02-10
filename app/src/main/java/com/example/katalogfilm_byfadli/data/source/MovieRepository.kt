@@ -26,7 +26,7 @@ class MovieRepository @Inject constructor(
         with(response) {
             return when (this.status) {
                 StatusResponse.SUCCESS -> {
-                    val listMovieEntity = this.body.generateMovieEntities(10)
+                    val listMovieEntity = this.body.generateMovieEntities(total)
                     MutableLiveData(Resource.success(listMovieEntity))
                 }
                 StatusResponse.ERROR -> {
@@ -44,7 +44,7 @@ class MovieRepository @Inject constructor(
         with(response) {
             return when (this.status) {
                 StatusResponse.SUCCESS -> {
-                    val listMovieEntity = this.body.generateMovieEntities(10)
+                    val listMovieEntity = this.body.generateMovieEntities(total)
                     MutableLiveData(Resource.success(listMovieEntity))
                 }
                 StatusResponse.ERROR -> {
@@ -70,17 +70,17 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    override fun getFavoritesMovies(title: String) =
+    override fun getFavoritesMovies(title: String?) =
         Pager(config = PagingConfig(pageSize = 20)) {
-            localDataSource.getFavoritesMovies(title)
+            localDataSource.getFavoritesMovies(title ?: "")
         }.liveData
 
-    override fun getFavoritesTvShows(title: String) =
+    override fun getFavoritesTvShows(title: String?) =
         Pager(config = PagingConfig(pageSize = 20)) {
-            localDataSource.getFavoritesTvShow(title)
+            localDataSource.getFavoritesTvShow(title ?: "")
         }.liveData
 
-    override fun isDataExist(id: Int): List<MovieEntity> {
-        return localDataSource.isDataExist(id)
+    override fun isDataExist(id: Int): Boolean {
+        return localDataSource.isDataExist(id).isNotEmpty()
     }
 }

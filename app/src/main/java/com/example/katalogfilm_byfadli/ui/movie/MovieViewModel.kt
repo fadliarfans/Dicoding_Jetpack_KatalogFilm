@@ -49,5 +49,5 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
         }
     }
 
-    fun getData(): LiveData<Resource<List<MovieEntity>>> = movieOrTvShowData
+    fun getMovieOrTvShowData(): LiveData<Resource<List<MovieEntity>>> = movieOrTvShowData
 }

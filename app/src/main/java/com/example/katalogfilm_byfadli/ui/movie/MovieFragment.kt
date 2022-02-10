@@ -59,7 +59,7 @@ class MovieFragment(private val isTv: Boolean) : Fragment() {
     }
 
     private fun initiateObserver() {
-        viewModel.getData().observe(viewLifecycleOwner) {
+        viewModel.getMovieOrTvShowData().observe(viewLifecycleOwner) {
             when (it.status) {
                 SUCCESS -> {
                     binding.rvMovie.visibility = View.VISIBLE

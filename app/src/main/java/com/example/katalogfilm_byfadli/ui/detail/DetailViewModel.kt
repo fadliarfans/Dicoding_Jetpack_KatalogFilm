@@ -1,6 +1,5 @@
 package com.example.katalogfilm_byfadli.ui.detail
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.katalogfilm_byfadli.data.source.MovieRepository
 import com.example.katalogfilm_byfadli.data.source.local.entity.MovieEntity
@@ -15,18 +14,12 @@ class DetailViewModel @Inject constructor(private val movieRepository: MovieRepo
     private val detailMovieOrTvShowData: MutableLiveData<MovieEntity> = MutableLiveData()
     private val favoriteState: MutableLiveData<Boolean> = MutableLiveData()
 
-    init {
-        checkFavoriteState()
-    }
-
-    private fun checkFavoriteState() {
+    fun checkFavoriteState(id:Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (movieRepository.isDataExist(detailMovieOrTvShowData.value?.id ?: 0).isEmpty()) {
-                favoriteState.postValue(false)
-                Log.v("Debug", "Not Favorite")
-            } else {
+            if (movieRepository.isDataExist(id)) {
                 favoriteState.postValue(true)
-                Log.v("Debug", "Favorite")
+            } else {
+                favoriteState.postValue(false)
             }
         }
     }

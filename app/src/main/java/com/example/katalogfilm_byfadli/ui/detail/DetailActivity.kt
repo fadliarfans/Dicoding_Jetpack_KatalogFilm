@@ -33,6 +33,7 @@ class DetailActivity : AppCompatActivity() {
         if (extras != null) {
             val data: MovieEntity? = extras.getParcelable(EXTRA_DATA)
             viewModel.setDetailMovieOrTvShowData(data)
+            viewModel.checkFavoriteState(data?.id?:0)
         }
     }
 
