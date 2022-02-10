@@ -7,12 +7,6 @@ import com.example.katalogfilm_byfadli.data.source.MovieRepository
 import com.example.katalogfilm_byfadli.utils.DataDummy
 import com.example.katalogfilm_byfadli.utils.generateMovieEntities
 import com.google.common.truth.Truth
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,19 +25,8 @@ class MovieFavoriteViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val dispatcher = StandardTestDispatcher()
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
-        Dispatchers.setMain(dispatcher)
         viewModel = MovieFavoriteViewModel(movieRepository)
     }
 
@@ -52,7 +35,7 @@ class MovieFavoriteViewModelTest {
         val dummyMovies = DataDummy.loadMoviesData().generateMovieEntities(10)
         val pagingData = PagingData.from(dummyMovies)
 
-       `when`(movieRepository.getFavoritesMovies(""))
+        `when`(movieRepository.getFavoritesMovies(null))
             .thenReturn(MutableLiveData(pagingData))
 
         val moviesPagingData = viewModel.loadMovieOrTvShowData(false)
@@ -64,7 +47,7 @@ class MovieFavoriteViewModelTest {
         val dummyTvShows = DataDummy.loadTvShowsData().generateMovieEntities(12)
         val pagingData = PagingData.from(dummyTvShows)
 
-        `when`(movieRepository.getFavoritesTvShows(""))
+        `when`(movieRepository.getFavoritesTvShows(null))
             .thenReturn(MutableLiveData(pagingData))
 
         val moviesPagingData = viewModel.loadMovieOrTvShowData(false)

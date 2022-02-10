@@ -84,6 +84,7 @@ class HomeActivityTest {
     fun insertOrDeleteFavoriteMovies() {
         onView(withId(R.id.tabs)).check(matches(isDisplayed()))
         onView(withId(R.id.tabs)).perform(selectTabAtPosition(0))
+        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
@@ -98,6 +99,7 @@ class HomeActivityTest {
     fun insertOrDeleteFavoriteTvShows() {
         onView(withId(R.id.tabs)).check(matches(isDisplayed()))
         onView(withId(R.id.tabs)).perform(selectTabAtPosition(1))
+        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
@@ -112,6 +114,7 @@ class HomeActivityTest {
     fun loadDetailMovie() {
         onView(withId(R.id.tabs)).check(matches(isDisplayed()))
         onView(withId(R.id.tabs)).perform(selectTabAtPosition(0))
+        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
@@ -133,6 +136,7 @@ class HomeActivityTest {
     fun loadDetailTvShow() {
         onView(withId(R.id.tabs)).check(matches(isDisplayed()))
         onView(withId(R.id.tabs)).perform(selectTabAtPosition(1))
+        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
